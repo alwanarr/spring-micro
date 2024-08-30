@@ -1,0 +1,404 @@
+{
+	"info": {
+		"_postman_id": "3491d427-d91a-4306-8028-5bc5502b8b9c",
+		"name": "ACCROD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10055443"
+	},
+	"item": [
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "Get Student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}students/",
+							"host": [
+								"{{baseurl}}students"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"firstName\" : \"Antasena\",\r\n    \"lastName\" : \"\",\r\n    \"gender\": \"male\",\r\n    \"dob\": \"2000-01-01\",\r\n    \"address\" : \"latumenten\",\r\n    \"email\" : \"jiwaraya@gmail.com\",\r\n    \"phoneNum\" : \"11222\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}students/",
+							"host": [
+								"{{baseurl}}students"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}students/71eec4af-2fe6-44a4-9fca-c59b4967c89d",
+							"host": [
+								"{{baseurl}}students"
+							],
+							"path": [
+								"71eec4af-2fe6-44a4-9fca-c59b4967c89d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"firstName\" : \"Jiwa\",\r\n    \"lastName\" : \"raga\",\r\n    \"gender\": \"male\",\r\n    \"dob\": \"2000-01-01\",\r\n    \"address\" : \"latumenten\",\r\n    \"email\" : \"jiwaraya@gmail.com\",\r\n    \"phoneNum\" : \"11222\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}students/71eec4af-2fe6-44a4-9fca-c59b4967c89d",
+							"host": [
+								"{{baseurl}}students"
+							],
+							"path": [
+								"71eec4af-2fe6-44a4-9fca-c59b4967c89d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "attendance",
+			"item": [
+				{
+					"name": "attendance/student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}attendance/student/71eec4af-2fe6-44a4-9fca-c59b4967c89d",
+							"host": [
+								"{{baseurl}}attendance"
+							],
+							"path": [
+								"student",
+								"71eec4af-2fe6-44a4-9fca-c59b4967c89d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"studentId\" : \"71eec4af-2fe6-44a4-9fca-c59b4967c89d\",\r\n    \"teacherId\" : \"\",\r\n    \"studentClassId\" : \"c64c30f6-2ccb-4529-802d-2bde2b90484d\",\r\n    \"status\" : \"PRESENT\",\r\n    \"remarks\" : \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}attendance/",
+							"host": [
+								"{{baseurl}}attendance"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teacher",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}teachers?firstName=Agus",
+							"host": [
+								"{{baseurl}}teachers"
+							],
+							"query": [
+								{
+									"key": "firstName",
+									"value": "Agus"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"gajah\",\r\n    \"lastName\": \"Bintang\",\r\n    \"dob\": \"1988-11-12\",\r\n    \"gender\": \"male\",\r\n    \"address\": \"Jalan Sudirman\",\r\n    \"phoneNumber\": \"081223344556\",\r\n    \"qualification\": \"S1 Pendidikan Fisika\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}teachers/",
+							"host": [
+								"{{baseurl}}teachers"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Teacher",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}teachers/3c6e4d9e-02e4-4f8a-8c25-51c5a4ff994e",
+							"host": [
+								"{{baseurl}}teachers"
+							],
+							"path": [
+								"3c6e4d9e-02e4-4f8a-8c25-51c5a4ff994e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}teachers?firstName=Ag",
+							"host": [
+								"{{baseurl}}teachers"
+							],
+							"query": [
+								{
+									"key": "firstName",
+									"value": "Ag"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "class",
+			"item": [
+				{
+					"name": "teacher schedule",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}classes/3c6e4d9e-02e4-4f8a-8c25-51c5a4ff994e/schedule?date=2024-09-01",
+							"host": [
+								"{{baseurl}}classes"
+							],
+							"path": [
+								"3c6e4d9e-02e4-4f8a-8c25-51c5a4ff994e",
+								"schedule"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2024-09-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save Schedule",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"classId\": \"c64c30f6-2ccb-4529-802d-2bde2b90484d\",\r\n    \"subject\": \"Bahasa Indonesia\",\r\n    \"scheduleDate\": \"2024-09-01\",\r\n    \"startTime\": \"2024-09-01T09:00:00\",\r\n    \"endTime\": \"2024-09-01T10:00:00\",\r\n    \"teacherId\": \"3c6e4d9e-02e4-4f8a-8c25-51c5a4ff994e\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}classes/",
+							"host": [
+								"{{baseurl}}classes"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save class",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Kelas 3C\",\r\n    \"academicYear\" : \"2024-2025\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}classes/save-class",
+							"host": [
+								"{{baseurl}}classes"
+							],
+							"path": [
+								"save-class"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update class",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Kelas 1A-updated\",\r\n    \"academicYear\" : \"2024-2025\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseurl}}classes/update-class/c64c30f6-2ccb-4529-802d-2bde2b90484d",
+							"host": [
+								"{{baseurl}}classes"
+							],
+							"path": [
+								"update-class",
+								"c64c30f6-2ccb-4529-802d-2bde2b90484d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete class",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}/classes/delete-class/c64c30f6-2ccb-4529-802d-2bde2b90484d",
+							"host": [
+								"{{baseurl}}"
+							],
+							"path": [
+								"classes",
+								"delete-class",
+								"c64c30f6-2ccb-4529-802d-2bde2b90484d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get class by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}classes/c64c30f6-2ccb-4529-802d-2bde2b90484d",
+							"host": [
+								"{{baseurl}}classes"
+							],
+							"path": [
+								"c64c30f6-2ccb-4529-802d-2bde2b90484d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseurl}}classes",
+							"host": [
+								"{{baseurl}}classes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

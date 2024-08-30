@@ -1,0 +1,146 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: school
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./02_data.sql:/docker-entrypoint-initdb.d/02_data.sql
+    networks:
+      - pgnetwork
+   
+  student-service:
+      build:
+        context: ./student-service
+        dockerfile: Dockerfile
+      container_name: student_service
+      ports:
+        - "8080:8080"
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/school
+        SPRING_DATASOURCE_USERNAME: user
+        SPRING_DATASOURCE_PASSWORD: root
+        SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+        SPRING_JPA_HIBERNATE_DDL_AUTO: update
+        SPRING_JPA_SHOW_SQL: true
+        SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: student
+        SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+        SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+        SPRING_REST_RESTTEMPLATE_CONNECTION_TIMEOUT: 5000
+        SPRING_REST_RESTTEMPLATE_READ_TIMEOUT: 5000
+        LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: DEBUG
+        LOGGING_LEVEL_ORG_HIBERNATE: INFO
+        SERVER_PORT: 8080
+      depends_on:
+        - postgres
+      networks:
+        - pgnetwork
+  class-service:
+     build:
+        context: ./class-service
+        dockerfile: Dockerfile
+     container_name: class_service
+     ports:
+        - "8081:8081"
+     environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/school
+        SPRING_DATASOURCE_USERNAME: user
+        SPRING_DATASOURCE_PASSWORD: root
+        SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+        SPRING_JPA_SHOW_SQL: true
+        SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: classes
+        SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+        SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+        SPRING_REST_RESTTEMPLATE_CONNECTION_TIMEOUT: 5000
+        SPRING_REST_RESTTEMPLATE_READ_TIMEOUT: 5000
+        LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: DEBUG
+        LOGGING_LEVEL_ORG_HIBERNATE: INFO
+        INTERNAL_API_TEACHER_URL: http://teacher-service:8083/teachers/
+        SERVER_PORT: 8081
+     depends_on:
+        - postgres
+     networks:
+        - pgnetwork
+  attendance-service:
+    build:
+        context: ./attendance-service
+        dockerfile: Dockerfile
+    container_name: attendance_service
+    ports:
+        - "8082:8082"
+    environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/school
+        SPRING_DATASOURCE_USERNAME: user
+        SPRING_DATASOURCE_PASSWORD: root
+        SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+        SPRING_JPA_SHOW_SQL: true
+        SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: att
+        SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+        SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+        SPRING_REST_RESTTEMPLATE_CONNECTION_TIMEOUT: 5000
+        SPRING_REST_RESTTEMPLATE_READ_TIMEOUT: 5000
+        LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: DEBUG
+        LOGGING_LEVEL_ORG_HIBERNATE: INFO
+        INTERNAL_API_CLASSAPI_URL: http://class-service:8081/classes/
+        INTERNAL_API_STUDENT_BASE: http://student-service:8080/students/
+        SERVER_PORT: 8082
+    depends_on:
+        - postgres
+    networks:
+        - pgnetwork
+  teacher-service:
+    build:
+        context: ./teacher-service
+        dockerfile: Dockerfile
+    container_name: teacher_service
+    ports:
+        - "8083:8083"
+    environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/school
+        SPRING_DATASOURCE_USERNAME: user
+        SPRING_DATASOURCE_PASSWORD: root
+        SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+        SPRING_JPA_SHOW_SQL: true
+        SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: teacher
+        SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+        SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+        SPRING_REST_RESTTEMPLATE_CONNECTION_TIMEOUT: 5000
+        SPRING_REST_RESTTEMPLATE_READ_TIMEOUT: 5000
+        LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB: DEBUG
+        LOGGING_LEVEL_ORG_HIBERNATE: INFO
+        SERVER_PORT: 8083
+    depends_on:
+        - postgres
+    networks:
+        - pgnetwork
+  gateway-service:
+   build:
+    context: ./gateway-service
+    dockerfile: Dockerfile
+   container_name: gateway-service
+   ports:
+    - "9090:9090"
+   volumes:
+    - ./gateway.yml:/config/application.yml
+   environment:
+    - SPRING_CONFIG_LOCATION=file:/config/application.yml
+   depends_on:
+    - class-service
+    - teacher-service
+   networks:
+    - pgnetwork
+ 
+volumes:
+  pgdata:
+
+networks:
+  pgnetwork:
+    driver: bridge

@@ -1,0 +1,35 @@
+
+spring:
+  application:
+    name: attendance
+  datasource:
+    url: jdbc:postgresql://localhost:5432/school
+    username: user
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: att
+        format_sql: true
+
+  rest:
+    resttemplate:
+      connect-timeout: 5000
+      read-timeout: 5000
+
+internal-api:
+  classApi :
+    url: http://localhost:8081/classes/
+  student:
+    base: http://localhost:8080/students/
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.hibernate: INFO
+server:
+  port: 8082
